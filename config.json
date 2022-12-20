@@ -1,0 +1,8 @@
+{
+  "token": "MTA0ODYyNTUwNzg5NTM1NzUyMA.GcEygQ.x3i16HOOPWxm0hsKtc1HiG-vVn1famEyG8Aprs",
+  "currency": "mkp",
+  "modules": [
+    "ping",
+    "holdem"
+  ]
+}
