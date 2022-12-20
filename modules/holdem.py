@@ -11,65 +11,61 @@ class Card:
     def __init__(self):
         self.__deck: list = [
             # spades
-            "sa",
-            "s1",
-            "s2",
-            "s3",
-            "s4",
-            "s5",
-            "s6",
-            "s7",
-            "s8",
-            "s9",
-            "st",
-            "sj",
-            "sq",
-            "sk",
+            "♠A",
+            "♠2",
+            "♠3",
+            "♠4",
+            "♠5",
+            "♠6",
+            "♠7",
+            "♠8",
+            "♠9",
+            "♠10",
+            "♠J",
+            "♠Q",
+            "♠K",
             # hearts
-            "ha",
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "h5",
-            "h6",
-            "h7",
-            "h8",
-            "h9",
-            "ht",
-            "hj",
-            "hq",
-            "hk",
+            "♥A",
+            "♥2",
+            "♥3",
+            "♥4",
+            "♥5",
+            "♥6",
+            "♥7",
+            "♥8",
+            "♥9",
+            "♥10",
+            "♥J",
+            "♥Q",
+            "♥K",
             # diamonds
-            "da",
-            "d1",
-            "d2",
-            "d3",
-            "d4",
-            "d5",
-            "d6",
-            "d7",
-            "d8",
-            "d9",
-            "dt",
-            "dj",
-            "dq",
-            "dk",
+            "♦A",
+            "♦2",
+            "♦3",
+            "♦4",
+            "♦5",
+            "♦6",
+            "♦7",
+            "♦8",
+            "♦9",
+            "♦10",
+            "♦J",
+            "♦Q",
+            "♦K",
             # clovers
-            "ca",
-            "c1",
-            "c2",
-            "c3",
-            "c4",
-            "c5",
-            "c6",
-            "c7",
-            "c8",
-            "c9",
-            "ct",
-            "cj",
-            "cq",
-            "ck",
+            "♣A",
+            "♣2",
+            "♣3",
+            "♣4",
+            "♣5",
+            "♣6",
+            "♣7",
+            "♣8",
+            "♣9",
+            "♣10",
+            "♣J",
+            "♣Q",
+            "♣K",
         ]
         self._droped_cards: list = list()
 
@@ -110,22 +106,28 @@ class Holdem(commands.Cog):
     async def holdem_command(self,
                              interaction: discord.Interaction,
                              command_type: app_commands.Choice[str], other_person:discord.User=None) -> None:
-
-        if command_type.value == "start":
-            channel = await interaction.channel.create_thread(name="asdf", type=discord.ChannelType.public_thread)
-
-            #invite users
-            await channel.add_user(interaction.user)
-            await channel.add_user(other_person)
-
-            deck = Card()
-
         await interaction.response.send_message(
             embed=discord.Embed(
-                title=f"test",
-                description=f"{command_type.value}"
+                title="Holdem",
+                description="```please check your dm.```",
+                color=0x62c1cc
             )
         )
+
+        if command_type.value == "start":
+            #card settings
+            deck:Card = Card()
+            deck.shuffle()
+            author_cards: list = [deck.pop_card(), deck.pop_card()]
+            other_person_cards: list = [deck.pop_card(), deck.pop_card()]
+
+
+            author_dm = await interaction.user.create_dm()
+            await author_dm.send(f"{author_cards[0]}, {author_cards[1]}")
+
+            other_person_dm = await other_person.create_dm()
+            await other_person_dm.send(f"{other_person_cards[0]}, {other_person_cards[1]}")
+
 
 
 async def setup(bot: commands.Bot) -> None:
